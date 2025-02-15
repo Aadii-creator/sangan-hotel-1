@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            color: #4a90e2;
+        }
+
+        section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        section ul li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+        }
+
+        section ul li:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+        /* Menu Item Styles */
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            padding: 20px;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .menu-item h3 {
+            margin-top: 10px;
+            font-size: 1.5rem;
+        }
+
+        .menu-item p {
+            margin-top: 5px;
+            color: #777;
+        }
+
+        .menu-item .price {
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        /* Order Button */
+        .order-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .order-btn:hover {
+            background-color: #357ab7;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            background: #333;
+            color: white;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        /* Cart and Modal Styles */
+        .cart-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 100;
+        }
+
+        .cart-container h3 {
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .cart-item p {
+            margin: 0;
+        }
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .cart-modal-content button {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cart-modal-content button:hover {
+            background-color: #357ab7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .menu-item {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Menu</h1>
+    </header>
+    
+    <!-- Veg Dishes Section -->
+    <section>
+        <h2>Veg Dishes</h2>
+        <ul>
+            <li onclick="addToCart('Paneer Tikka Masala', 400)">Paneer Tikka Masala</li>
+            <li onclick="addToCart('Veg Biryani', 350)">Veg Biryani</li>
+            <li onclick="addToCart('Dal Makhani', 250)">Dal Makhani</li>
+        </ul>
+    </section>
+
+    <!-- Non-Veg Dishes Section -->
+    <section>
+        <h2>Non-Veg Dishes</h2>
+        <div class="menu-container">
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr-9eIb0bxbv4V1atgmZq5F7Vh4Z1OZxli6A&s" alt="Chicken Tikka Masala">
+                <h3>Chicken Tikka Masala</h3>
+                <p>Spicy grilled chicken cooked in a rich tomato gravy.</p>
+                <p class="price">Price: RS 400</p>
+                <button class="order-btn" onclick="addToCart('Chicken Tikka Masala', 400)">Order Now</button>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPjI9TpPmqc9L5yH5QyNNj1yQz4RjF6pFvGkA&s" alt="Butter Chicken">
+                <h3>Butter Chicken</h3>
+                <p>Creamy chicken in a buttery gravy.</p>
+                <p class="price">Price: RS 450</p>
+                <button class="order-btn" onclick="addToCart('Butter Chicken', 450)">Order Now</button>
+            </div>
+
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXyxS3kcFzEXhgmqjsHdn_jIFcG9jsTkBQYm67LwOxvIcM9AReyw" alt="Fish Curry">
+                <h3>Fish Curry</h3>
+                <p>Delicious fish cooked in tangy curry.</p>
+                <p class="price">Price: RS 500</p>
+                <button class="order-btn" onclick="addToCart('Fish Curry', 500)">Order Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart -->
+    <div class="cart-container" id="cart-container">
+        <h3>Your Cart</h3>
+        <div id="cart-items"></div>
+        <button onclick="viewCart()">View Cart</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal-content">
+            <h3>Order Details</h3>
+            <div id="modal-cart-items"></div>
+            <button onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Hotel Sangam | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        // Add items to the cart
+        function addToCart(dishName, price) {
+            const cartItem = { dishName, price };
+            cart.push(cartItem);
+
+            // Update the cart display
+            updateCartDisplay();
+        }
+
+        // Update Cart Display
+        function updateCartDisplay() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = '';
+            cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('cart-item');
+                itemDiv.innerHTML = `<p>${item.dishName} - RS ${item.price}</p>`;
+                cartItemsDiv.appendChild(itemDiv);
+            });
+
+            // Show the cart icon
+            const cartContainer = document.getElementById('cart-container');
+            cartContainer.style.display = 'block';
+        }
+
+        // View cart details
+        function viewCart() {
+            const modal = document.getElementById('cart-modal');
+            const modalCartItems = document.getElementById('modal-cart-items');
+
+            modalCartItems.innerHTML = '';
+            cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `<p>${item.dishName} - RS ${item.price}</p>`;
+                modalCartItems.appendChild(itemDiv);
+            });
+
+            modal.style.display = 'flex';
+        }
+
+        // Checkout
+        function checkout() {
+            alert("Proceeding to checkout...");
+            cart = [];
+            updateCartDisplay();
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board - Your Order</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        .kanban-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px;
+        }
+
+        .kanban-column {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 30%;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .kanban-column h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .kanban-column .count {
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+            color: #888;
+        }
+
+        .menu-item {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #e6e6e6;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            text-align: center;
+        }
+
+        /* Time information styles */
+        .time-info {
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+            color: #888;
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff4c4c;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #4caf50;
+            border-radius: 5px;
+        }
+
+        .drag-over {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Order</h1>
+    </header>
+
+    <div class="kanban-container">
+        <!-- To Do Column -->
+        <div class="kanban-column" id="to-do">
+            <h2>To Do</h2>
+            <div class="count" id="to-do-count">0 orders</div>
+            <div class="menu-item" id="item1" onclick="moveToInProgress(event)">
+                <img src="https://mytastycurry.com/wp-content/uploads/2017/05/paneer-tikka-4-1-500x500.jpg" alt="Paneer Tikka">
+                <h3>Paneer Tikka</h3>
+                <p>Grilled Paneer with fresh spices</p>
+                <div class="time-info">
+                    <p>Time to Make: 1 mins</p>
+                    <p>Time Remaining: 1 mins</p>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="menu-item" id="item2" onclick="moveToInProgress(event)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaeBlIywcv4RMaVlvzAk-ygkpjyiX0juwM6Q&s" alt="Veg Biryani">
+                <h3>Veg Biryani</h3>
+                <p>Spicy rice with mixed veggies</p>
+                <div class="time-info">
+                    <p>Time to Make: 25 mins</p>
+                    <p>Time Remaining: 25 mins</p>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="kanban-column" id="in-progress">
+            <h2>In Progress</h2>
+            <div class="count" id="in-progress-count">0 orders</div>
+        </div>
+
+        <!-- Completed Column -->
+        <div class="kanban-column" id="completed">
+            <h2>Completed</h2>
+            <div class="count" id="completed-count">0 orders</div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update the order count for each column
+        function updateOrderCount() {
+            const toDoCount = document.querySelectorAll('#to-do .menu-item').length;
+            const inProgressCount = document.querySelectorAll('#in-progress .menu-item').length;
+            const completedCount = document.querySelectorAll('#completed .menu-item').length;
+
+            document.getElementById('to-do-count').textContent = `${toDoCount} orders`;
+            document.getElementById('in-progress-count').textContent = `${inProgressCount} orders`;
+            document.getElementById('completed-count').textContent = `${completedCount} orders`;
+        }
+
+        // Move dish to In Progress column
+        function moveToInProgress(event) {
+            const dishElement = event.target.closest('.menu-item');
+            const inProgressColumn = document.getElementById("in-progress");
+
+            // Check if the dish is already in progress (if it has a countdown)
+            if (dishElement.querySelector('.countdown')) {
+                return; // Do nothing if countdown already exists
+            }
+
+            // Move the dish to the In Progress column
+            inProgressColumn.appendChild(dishElement);
+
+            // Update the order count
+            updateOrderCount();
+
+            // Start countdown timer for the item moved to "In Progress"
+            let timeRemainingElement = dishElement.querySelector('.time-info p:nth-child(2)');
+            let timeRemaining = parseInt(timeRemainingElement.textContent.replace('Time Remaining: ', '').replace(' mins', ''));
+            startCountdown(dishElement, timeRemaining, timeRemainingElement);
+        }
+
+        // Countdown function for the timer
+        function startCountdown(dishElement, timeRemaining, timeRemainingElement) {
+            let countdownElement = document.createElement("div");
+            countdownElement.classList.add("countdown");
+            countdownElement.textContent = `${timeRemaining} mins remaining`;
+            dishElement.appendChild(countdownElement);
+
+            let progressBar = dishElement.querySelector('.progress');
+            let countdownInterval = setInterval(function () {
+                timeRemaining--;
+                countdownElement.textContent = `${timeRemaining} mins remaining`;
+                progressBar.style.width = `${(25 - timeRemaining) * 4}%`; // Adjust this according to the time
+
+                // Update the time remaining text
+                timeRemainingElement.textContent = `Time Remaining: ${timeRemaining} mins`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = "Dish Completed!";
+                    dishElement.querySelector('.time-info').style.display = "none";  // Hide time info once completed
+
+                    // Move the dish to Completed column automatically
+                    document.getElementById("completed").appendChild(dishElement);
+
+                    // Update the order count
+                    updateOrderCount();
+                }
+            }, 60000);  // 60000 ms = 1 minute interval
+        }
+
+        // Initialize the order count when the page loads
+        window.onload = function() {
+            updateOrderCount();
+        };
+    </script>
+</body>
+</html>

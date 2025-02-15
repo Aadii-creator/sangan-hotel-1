@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board - More Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        .kanban-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px;
+        }
+
+        .kanban-column {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 30%;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .kanban-column h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            background-color: #f1f1f1;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: move;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .menu-item:hover {
+            background-color: #e6e6e6;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            text-align: center;
+        }
+
+        /* Dragging Styles */
+        .drag-over {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kanban Board - More Menu</h1>
+    </header>
+
+    <div class="kanban-container">
+        <!-- To Do Column -->
+        <div class="kanban-column" id="to-do" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>To Do</h2>
+            <div class="menu-item" id="item1" draggable="true" ondragstart="drag(event)">
+                <img src="https://mytastycurry.com/wp-content/uploads/2017/05/paneer-tikka-4-1-500x500.jpg" alt="Paneer Tikka">
+                <h3>Paneer Tikka</h3>
+                <p>Grilled Paneer with fresh spices</p>
+            </div>
+            <div class="menu-item" id="item2" draggable="true" ondragstart="drag(event)">
+                <img src="https://example.com/veg-biryani.jpg" alt="Veg Biryani">
+                <h3>Veg Biryani</h3>
+                <p>Spicy rice with mixed veggies</p>
+            </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="kanban-column" id="in-progress" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>In Progress</h2>
+        </div>
+
+        <!-- Completed Column -->
+        <div class="kanban-column" id="completed" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Completed</h2>
+        </div>
+    </div>
+
+    <script>
+        // Allow an element to be dragged
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        // Allow the drop of an element
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        // Handle the drop of an element
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var draggedItem = document.getElementById(data);
+            ev.target.appendChild(draggedItem);
+        }
+    </script>
+</body>
+</html>

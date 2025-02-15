@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Sangam</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #4a90e2, #1c67c5);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 15px;
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin: 0 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #ffcc00;
+            bottom: -5px;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Active State for Navigation Links */
+        nav a.active {
+            color: #ffcc00;
+            border-bottom: 3px solid #ffcc00;
+        }
+
+        /* Mobile Hamburger Menu */
+        .menu-toggle {
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+                display: none; /* Hide links initially */
+            }
+
+            nav.active {
+                display: flex;
+                flex-direction: column;
+            }
+
+            nav a {
+                margin: 10px 0;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('hotel-bg.jpg') no-repeat center center/cover;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #444;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        /* Menu Item Styling */
+        .menu-item {
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .menu-item h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .more-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #ffcc00;
+            color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .more-btn:hover {
+            background-color: hsl(68, 58%, 41%);
+        }
+
+        /* Veg and Non-Veg Styling */
+        .veg {
+            background-color: #a8e6a1;
+        }
+
+        .non-veg {
+            background-color: #ff6b6b;
+        }
+
+        .veg h3, .non-veg h3 {
+            color: white;
+        }
+
+        .veg .menu-item p, .non-veg .menu-item p {
+            color: white;
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #1c67c5, #4a90e2);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .menu-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .menu-item img {
+                height: 180px;
+            }
+
+            nav {
+                padding: 10px;
+            }
+
+            nav a {
+                margin: 0 10px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                margin: 10px 0;
+                font-size: 1rem;
+            }
+
+            .more-btn {
+                padding: 10px 20px;
+            }
+
+            .section {
+                padding: 30px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hotel Sangam</h1>
+    </header>
+    <nav>
+        <div class="menu-toggle" onclick="toggleMenu()">&#9776;</div>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#amenities" class="nav-link">Amenities</a>
+        <a href="#menu" class="nav-link">Menu</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="kanban.html" class="more-btn">Your order</a>
+
+    </nav>
+
+    <div class="hero">
+        <h1>Welcome to Hotel Sangam</h1>
+    </div>
+    <div id="about" class="section">
+        <h2>About Us</h2>
+        <p>Experience luxury and comfort at Hotel Sangam, located in the heart of the city. Our hotel offers excellent amenities and exceptional service to make your taste unforgettable.</p>
+    </div>
+    <div id="menu" class="section">
+        <h2>Menu</h2>
+        
+        <h3>Veg Options</h3>
+        <div class="menu-container veg">
+            <div class="menu-item">
+                <img src="https://mytastycurry.com/wp-content/uploads/2017/05/paneer-tikka-4-1-500x500.jpg" alt="paneer tikka masala">
+                <h3>Paneer Tikka Masala</h3>
+                <p>Juicy grilled paneer served with fresh curry.</p>
+                <p>Price: RS 300</p>
+            </div>
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrcC6OcYkQuAZMsVCqIbLlQmFRH1Be5--uCA&s" alt="veg biryani">
+                <h3>Veg Biryani</h3>
+                <p>Fragrant rice with mixed veggies.</p>
+                <p>Price: RS 250</p>
+            </div>
+        </div>
+
+        <h3>Non-Veg Options </h3>
+        <div class="menu-container non-veg">
+            <div class="menu-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr-9eIb0bxbv4V1atgmZq5F7Vh4Z1OZxli6A&s" alt="chicken tikka masala">
+                <h3>Chicken Tikka Masala</h3>
+                <p>Spicy grilled chicken cooked in a rich tomato gravy.</p>
+                <p>Price: RS 400</p>
+            </div>
+            <div class="menu-item">
+                <img src="https://www.archanaskitchen.com/images/archanaskitchen/1-Author/sibyl-archanaskitchen.com/Bengali_Style_Chicken_Rezala_Recipe__Chicken_Korma.jpg" alt="chicken korma">
+                <h3>Chicken Korma</h3>
+                <p>Creamy and rich chicken curry with cashews.</p>
+                <p>Price: RS 450</p>
+            </div>
+        </div>
+        <a href="menu.html" class="more-btn">More menu</a>
+        
+    </div>
+    <div id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>Address: Sonai, Shriramwadi, Khedle Road</p>
+        <p>Phone: +91 9764241155</p>
+        <p>Email: info@hotelsangam.com</p>
+    </div>
+    
+    <footer>
+        <p>&copy; 2017 Hotel Sangam. All rights reserved.</p>
+        <p>Follow us on <a href="#">Facebook</a>, <a href="#">Twitter</a>, <a href="#">Instagram</a></p>
+    </footer>
+
+    <script>
+        // Toggle Menu Function
+        function toggleMenu() {
+            document.querySelector('nav').classList.toggle('active');
+        }
+
+        // Highlight the active navigation link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(link => link.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
